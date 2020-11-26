@@ -16,7 +16,7 @@ export class MemberListComponent implements OnInit {
 
   // members$: Observable<Member[]> = new Observable;
   members?: Member[];
-  pagination?: Pagination;
+  pagination!: Pagination;
   userParams!: UserParams;
   user!: User;
   genderList = [{value: 'male', display:'Males'}, {value: 'female', display:'Females'}];
