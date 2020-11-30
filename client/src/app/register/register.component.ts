@@ -38,33 +38,18 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  // With FormGroup
-
-  // initializeForm() {
-  //   this.registerForm = new FormGroup({
-  //     gender: new FormControl('male'),
-  //     username: new FormControl('', Validators.required),
-  //     knownAs: new FormControl('', Validators.required),
-  //     dateOfBirth: new FormControl('', Validators.required),
-  //     city: new FormControl('', Validators.required),
-  //     country: new FormControl('', Validators.required),
-  //     password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
-  //     confirmPassword: new FormControl('', [Validators.required, this.matchValues2("password")]),
-  //   })
-  // }
-
-  matchValues(matchTo: string): ValidatorFn {
-    return (control: AbstractControl) => {
-      return control.get("confirmPassword") === control.get(matchTo) ? null : { isMatching: true }
-    }
-  }
-  // TODO
   // matchValues(matchTo: string): ValidatorFn {
   //   return (control: AbstractControl) => {
-  //     return control?.value === control?.parent?.controls[matchTo].value
-  //       ? null : { isMatching: true }
+  //     return control.get("confirmPassword") === control.get(matchTo) ? null : { isMatching: true }
   //   }
   // }
+  // TODO
+  matchValues(matchTo: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control?.value === control?.parent?.controls[matchTo].value
+        ? null : { isMatching: true }
+    }
+  }
 
   register() {
     this.accountService.register(this.registerForm.value).subscribe(response => {
