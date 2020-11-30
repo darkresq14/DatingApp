@@ -29,7 +29,7 @@ namespace API.Controllers
         {
             var username = User.GetUsername();
 
-            if (username == createMessageDto.RecipientUsername.ToLower()) return BadRequest("You cannot send messages to yourself");
+            if (username.ToLower() == createMessageDto.RecipientUsername.ToLower()) return BadRequest("You cannot send messages to yourself");
 
             var sender = await _userRepository.GetUserByUsernameAsync(username);
             var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
@@ -70,6 +70,25 @@ namespace API.Controllers
             var currentUsername = User.GetUsername();
 
             return Ok(await _messageRepository.GetMessageThread(currentUsername, username));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMessage(int id)
+        {
+            var username = User.GetUsername();
+
+            var message = await _messageRepository.GetMessage(id);
+
+            if (message.Sender.UserName != username && message.Recipient.UserName != username) return Unauthorized();
+
+            if (message.Sender.UserName == username) message.SenderDeleted = true;
+            if (message.Recipient.UserName == username) message.RecipientDeleted = true;
+
+            if (message.SenderDeleted && message.RecipientDeleted) _messageRepository.DeleteMessage(message);
+
+            if (await _messageRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Problem deleting the message");
         }
     }
 }
