@@ -5,6 +5,9 @@
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div class="text-center h3 bold">
+                    <span *ngIf="(presence.onlineUsers$ | async).includes(member.username)">
+                        <i class="fa fa-user-circle text-success"></i>
+                    </span>
                     {{member!.knownAs}}
                 </div>
                 <div>
@@ -50,7 +53,7 @@
                     style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
             </tab>
             <tab heading="Messages" (selectTab)="onTabActivated($event)">
-                <app-member-messages [messages]="messages" [username]="member.username"></app-member-messages>
+                <app-member-messages [username]="member.username"></app-member-messages>
             </tab>
         </tabset>
     </div>
