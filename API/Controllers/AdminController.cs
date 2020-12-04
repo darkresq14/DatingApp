@@ -38,6 +38,8 @@ namespace API.Controllers
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {
+            if (roles == null) return BadRequest("You cannot leave a user with no roles");
+
             var selectedRoles = roles.Split(",").ToArray();
 
             var user = await _userManager.FindByNameAsync(username);
