@@ -1,4 +1,4 @@
 # DatingApp
 
-FE: Angular 11
-BE: 
+FE: Angular 11 with Typescript  
+BE: C#  
