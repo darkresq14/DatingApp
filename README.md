@@ -1,4 +1,4 @@
 # DatingApp
 
 FE: Angular 11 with Typescript  
-BE: C#  
+BE: .NET Core  
